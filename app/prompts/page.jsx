@@ -4,7 +4,7 @@ const page = () => {
   return (
     <div className='h-[90vh]  flex justify-center' style={{alignItems:'center', backgroundColor:'rgb(253, 255, 247)'}}>
     <div>
-      <p>This is the contact page...</p>
+      <p>This is the prompts page...</p>
     </div>
   </div>
   )
