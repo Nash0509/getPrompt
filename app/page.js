@@ -10,9 +10,9 @@ const Page = () => {
   const router = useRouter();
 
   return (
-    <div className='h-[65vh]'>
-      <div className='flex justify-center mt-[25vh] flex-col' style={{alignItems:'center'}}>
-        <p className='2xl:text-6xl xl:text-5xl lg:text-4xl md:text-3xl sm:text-[2rem] font-bold'>Discover and create AI &nbsp;<br />
+    <div className='h-[90vh] bg-back bg-cover bg-center bg-no-repeat pt-[20vh]'>
+      <div className='flex justify-center flex-col' style={{alignItems:'center'}}>
+        <p className='sm:text-4xl font-bold text-white bg-black bg-opacity-50 rounded p-7'>Discover and create AI &nbsp;<br />
         <Typewriter
             words={['prompts...']}
             loop={50}

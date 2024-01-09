@@ -1,10 +1,14 @@
 'use client'
 import React, {useEffect, useState} from 'react'
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const page = () => {
 
    const [email, setEmail] = useState('');
    const [pass, setPass] = useState('');
+
+   const router = useRouter();
 
    async function handleRegister(e) {
 
@@ -13,16 +17,16 @@ const page = () => {
     try {
 
       if(email === '' || pass === '') {
-        alert("Please enter all the required information...");
+        toast.warning("Please enter all the required information...");
         return ;
       }
 
       if(localStorage.getItem('token')) {
-        alert("You have already registered...");
+        toast.warning("You have already registered...");
         return ;
       }
 
-       await fetch(`http://localhost:3001/register/${email}/${pass}`, {
+       await fetch(`https://getprompt-api.onrender.com/register/${email}/${pass}`, {
         method : 'POST',
         headers : {
           'Content-Type' : 'application/json'
@@ -36,23 +40,25 @@ const page = () => {
           alert("This email is already registered...");
          }
          else {
-          alert("registered successfully..."+res.token);
+          toast.success("registered successfully...");
           console.log("Registered successfully : "+res.token);
           localStorage.setItem('token', res.token);
+          localStorage.setItem('id', res.id);
+          router.push('/prompts');
          }
        })
 
     }
     catch (err) {
      console.log("An error has occurred");
-     alert("An error cooured from the login from the frontend..." +err.message);
+     toast.error(err.message);
     }
 
  }
 
    return (
-    <div className='h-[90vh]  flex justify-center pt-[25vh]' style={{backgroundColor:'rgb(253, 255, 247)'}}>
-      <div className='bg-black text-white h-[45vh] p-[2rem] rounded shadow-md'>
+    <div className='h-[90vh]  flex justify-center' style={{backgroundColor:'rgb(253, 255, 247)', alignItems:'center'}}>
+      <div className='bg-black text-white p-[2rem] rounded shadow-md flex flex-col  min-h-[90px]'>
         
         <form>
           <h1 className='mb-[3rem] text-3xl'>Register</h1>
