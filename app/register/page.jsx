@@ -36,8 +36,11 @@ const page = () => {
        }) 
        .then((res) => res.json())
        .then((res) => {
-         if(res.token === undefined) {
-          alert("This email is already registered...");
+        if(res.m2 === "invalid") {
+          toast.warning(res.message);
+        }
+        else if(res.token === undefined) {
+          toast.warning("This email is already registered...");
          }
          else {
           toast.success("registered successfully...");

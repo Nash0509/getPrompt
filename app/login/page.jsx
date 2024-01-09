@@ -71,20 +71,17 @@ const page = () => {
         .then((res) => res.json())
         .then((res) => {
 
-          // if(res.status === '404') {
-          //   alert("No account found with this email...");
-          // }
-          // if(res.ok) {
-          //   alert("registered successfully..."+res.token);
-          //   console.log("Registered successfully : "+res.token);
-          //   localStorage.setItem("token", res.token);
-          //   localStorage.setItem('id', res.id);
-          // }
-          toast.success("Logged in successfully");
-          console.log("Registered successfully : "+res.token + " " + res.id);
+          if(res.message === '404') {
+            toast.warning("No account found with this email...");
+          }
+          else {
+              
+            toast.success("Logged in successfully");
             localStorage.setItem("token", res.token);
             localStorage.setItem('id', res.id);
             router.push('/prompts');
+
+          }
           
         })
         .catch((err) => {
@@ -94,7 +91,7 @@ const page = () => {
      }
      catch (err) {
       console.log("An error has occurred");
-      alert("An error cooured from the login from the frontend..." +err.message);
+      toast.error("An error cooured from the login from the frontend..." +err.message);
      }
 
   }
