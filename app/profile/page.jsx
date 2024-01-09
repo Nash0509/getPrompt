@@ -91,6 +91,9 @@ const page = () => {
           .then((res) => {
            console.log("Look here once alos", res);
            setCard(res);
+           if(res.length == 0) {
+            toast.info("No prompts till now, create one...");
+           }
            const likesArray = res.map((card) => card.likes);
            const totalLikesCount = likesArray.reduce((total, likes) => total + likes, 0);
            setTotalLikes(totalLikesCount);

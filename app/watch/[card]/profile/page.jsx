@@ -1,8 +1,8 @@
 'use client'
 
 import React, {useEffect, useState} from 'react'
-import { usePathname } from 'next/navigation'
-import { FaClipboard, FaEdit } from 'react-icons/fa';
+import { usePathname, useRouter } from 'next/navigation'
+import { FaClipboard, FaEdit, FaTrash } from 'react-icons/fa';
 import {toast} from 'react-toastify';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -27,6 +27,7 @@ const style = {
 const page = () => {
 
     const router = usePathname();
+    const router1 = useRouter();
     const [card, setCard] = useState([]);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -96,6 +97,30 @@ const page = () => {
 
 }
 
+   async function handleDelete() {
+
+      await fetch('https://getprompt-api.onrender.com/delete', {
+
+        method : 'DELETE',
+        headers : {
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+          id : router.split('/')[2],
+        })
+
+
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        toast.success("Prompt deleted successfully");
+        router1.push('/profile');
+        console.log(res);
+      })
+      .catch((err) => toast.error(err.message));
+
+   }
+
   return (
     <div className='h-[90vh] flex justify-center flex-col' style={{alignItems : 'center'}}>
       <p className='mb-[2rem] text-[2rem]'>The prompt</p>
@@ -104,7 +129,8 @@ const page = () => {
       card.map((c, index) => {
         return (
          <div className='border rounded shadow-lg w-[30vw] text-center p-[2rem] relative  min-w-[60vw] max-w-[80vw]' >
-          <FaEdit size={25} className='absolute right-2 text-[black] hover:text-[rgb(60,60,60)] hover:cursor-pointer' onClick={handleOpen}/>
+          <FaEdit size={25} className='absolute right-2 text-[black] hover:text-[rgb(60,60,60)] hover:cursor-pointer' onClick={handleOpen} title='edit'/>
+          <div className='relative'><FaTrash size={25} className='absolute right-2 cursor-pointer' title='delete' onClick={handleDelete}/></div>
            <p className='bg-[]'>Type : {c.type}</p><br />
            <p>Prompt : {c.prompt}</p><br />
           <p>Discription: {c.dis}</p><br />
