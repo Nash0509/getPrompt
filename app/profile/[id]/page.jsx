@@ -88,10 +88,9 @@ const page = () => {
            console.log(res);
            setCard(res);
 
-           const likesArray = [res].map((card) => card.likes);
+           const likesArray = res.map((card) => card.likes);
            const totalLikesCount = likesArray.reduce((total, likes) => total + likes, 0);
            setTotalLikes(totalLikesCount);
-
           })
           .catch((err) => {
              alert("Error from the fetchCard function : " + err.message);
