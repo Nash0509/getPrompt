@@ -48,6 +48,8 @@ const page = () => {
 
 
   React.useEffect(() => {
+
+    toast.info("Cold loading may take upto 20 seconds (free teir), please wait...");
      
      async function getData() {
 
